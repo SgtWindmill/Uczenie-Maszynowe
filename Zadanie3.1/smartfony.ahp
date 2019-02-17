@@ -1,0 +1,139 @@
+Version: 2.0
+
+Alternatives: &alternatives
+#Dane i parametry pralek
+  Xiaomi Mi Mix 3:
+    pamiec_RAM: 6
+    pamiec_wbudowana: 128
+    cena: 2699
+    liczba_opinii: 0
+  Samsung Galaxy A9:
+    pamiec_RAM: 6
+    pamiec_wbudowana: 128
+    cena: 1990
+    liczba_opinii: 7
+  Xiaomi MI 8 Lite:
+    pamiec_RAM: 4
+    pamiec_wbudowana: 64
+    cena: 1099
+    liczba_opinii: 29
+  Honor 8X:
+    pamiec_RAM: 4
+    pamiec_wbudowana: 128
+    cena: 1299
+    liczba_opinii: 396
+  Huawei P20:
+    pamiec_RAM: 4
+    pamiec_wbudowana: 64
+    cena: 1799
+    liczba_opinii: 11
+  Huawei P20 Lite:
+    pamiec_RAM: 4
+    pamiec_wbudowana: 64
+    cena: 1099
+    liczba_opinii: 179
+  Samsung Galaxy A7:
+    pamiec_RAM: 4
+    pamiec_wbudowana: 64
+    cena: 1399
+    liczba_opinii: 18
+  Honor 9 Lite:
+    pamiec_RAM: 3
+    pamiec_wbudowana: 32
+    cena: 749
+    liczba_opinii: 53
+  Huawei P20 Pro:
+    pamiec_RAM: 6
+    pamiec_wbudowana: 128
+    cena: 2699
+    liczba_opinii: 72
+  Xiaomi Redmi 6:
+    pamiec_RAM: 3
+    pamiec_wbudowana: 32
+    cena: 599
+    liczba_opinii: 25
+  
+Goal:
+  name: Kupowanie Smartfona
+  decision-markers:
+  - Tata: 0.4
+  - Mama: 0.4
+  - Dziecko: 0.2
+  preferences:
+    Tata:
+        pairwise:
+        - [Cost, Efficiency, 1/3]
+        - [Cost, Quality, 5]
+        - [Cost, Style, 3]
+        - [Efficiency, Quality, 3]
+        - [Efficiency, Style, 9]
+        - [Quality, Style, 1]
+    Mama:
+        pairwise:
+        - [Cost, Efficiency, 7]
+        - [Cost, Quality, 5]
+        - [Cost, Style, 7]
+        - [Efficiency, Quality, 1/3]
+        - [Efficiency, Style, 1/5]
+        - [Quality, Style, 1]
+    Dziecko:
+        pairwise:
+        - [Cost, Efficiency, 1/2]
+        - [Cost, Quality, 3]
+        - [Cost, Style, 1]
+        - [Efficiency, Quality, 3]
+        - [Efficiency, Style, 5]
+        - [Quality, Style, 1]
+    
+  children:
+    Cost:
+      preferences:
+        Tata:
+          pairwiseFunction:
+            function(a1, a2) min(9, max(1/9, a1$cena/a2$cena))
+        Mama:
+          scoreFunction:
+            function(a) 1/a$cena
+        Dziecko:
+          pairwiseFunction: 
+            function(a1, a2) min(9, max(1/9, a2$pamiec_RAM/a1$pamiec_RAM))
+      children: *alternatives
+    Efficiency: 
+      preferences:
+        Tata:
+          pairwiseFunction:
+            function(a1, a2) min(9, max(1/9, a1$cena/a2$cena))
+        Mama:
+          scoreFunction:
+            function(a) 1/a$cena
+        Dziecko:
+          pairwiseFunction: 
+            function(a1, a2) min(9, max(1/9, a2$pamiec_RAM/a1$pamiec_RAM))
+      children: *alternatives
+    Style:
+      preferences:    
+        Tata:
+          pairwiseFunction:
+            function(a1, a2) min(9, max(1/9, a1$cena/a2$cena))
+        Mama:
+          scoreFunction:
+            function(a) 1/a$cena
+        Dziecko:
+          pairwiseFunction: 
+            function(a1, a2) min(9, max(1/9, a2$pamiec_RAM/a1$pamiec_RAM))
+      children: *alternatives
+    Quality:
+      preferences:
+        Tata:
+          pairwiseFunction:
+            function(a1, a2) min(9, max(1/9, a1$cena/a2$cena))
+        Mama:
+          scoreFunction:
+            function(a) 1/a$cena
+        Dziecko:
+          pairwiseFunction: 
+            function(a1, a2) min(9, max(1/9, a2$pamiec_RAM/a1$pamiec_RAM))
+      children: *alternatives
+#
+# End of Goal Section
+#####################################
